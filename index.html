@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: aquamarine;
+      }
+      #image {
+        height: 200px;
+        width: 300px;
+      }
+      #movie-info {
+        height: 40px;
+        width: 400px;
+        border-radius: 25px;
+        background-color: snow;
+        color: black;
+      }
+      #submit {
+        background-color: cadetblue;
+        height: 40px;
+        width: 200px;
+        border-radius: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <form id="form">
+        <input type="text" placeholder="search here" id="movie-info" />
+        <button id="submit">type</button>
+      </form>
+
+      <div id="container">
+        <h1 id="name"></h1>
+        <hr />
+        <h1 id="year"></h1>
+        <hr />
+        <h2 id="actors"></h2>
+        <hr />
+        <h4 id="lang"></h4>
+        <hr />
+        <img id="image" src="" style="display: none" />
+        <hr />
+        <h4 id="rating"></h4>
+        <!-- <img id="image" /> -->
+      </div>
+    </center>
+    <script>
+      document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var filmname = e.target[0].value;
+        console.log(filmname);
+        var ApiKey = "525aa7b9"; // Remember to replace this with your actual API key
+        var url = "http://www.omdbapi.com/?apikey=" + ApiKey + "&t=" + filmname;
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            // Handle the data here
+
+            document.getElementById("name").innerHTML = "Name: " + data.Title;
+
+            document.getElementById("year").innerHTML = "Year: " + data.Year;
+            document.getElementById("image").src = data.Poster;
+            image.style.display = "block";
+            document.getElementById("actors").innerHTML =
+              "Actors: " + data.Actors;
+            document.getElementById("lang").innerHTML =
+              "Language: " + data.Language;
+            document.getElementById("rating").innerHTML =
+              "Rating: " + data.imdbRating;
+
+            // var image = document.createElement("img");
+            // image.src = data.Poster;
+            // image.style.height = "200";
+            // image.style.width = "200";
+          })
+          .catch((error) => console.error("Error:", error));
+      });
+    </script>
+  </body>
+</html>
